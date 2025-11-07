@@ -4,7 +4,7 @@ import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import Tesseract from 'tesseract.js';
 import { v4 as uuidv4 } from 'uuid';
-import { generateEmbedding } from './embeddings.js';
+import { generateEmbedding } from './gemini.js';
 import { insertChunks, markDocumentProcessed } from '../db.js';
 
 /**

@@ -13,6 +13,12 @@ import { createDocument } from './db.js';
 
 dotenv.config();
 
+// Validate required environment variables
+if (!process.env.GEMINI_API_KEY) {
+  console.error('❌ GEMINI_API_KEY is required. Please set it in your .env file.');
+  process.exit(1);
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

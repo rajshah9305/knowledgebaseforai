@@ -1,6 +1,5 @@
 import express from 'express';
-import { generateEmbedding } from '../services/embeddings.js';
-import { answerQuestion } from '../services/qa.js';
+import { generateEmbedding, generateResponse } from '../services/gemini.js';
 import { getChunksForSearch } from '../db.js';
 
 const router = express.Router();
@@ -76,23 +75,6 @@ function cosineSimilarity(a, b) {
 }
 
 async function craftAnswer(question, chunks) {
-  let bestAnswer = {
-    score: 0,
-    text: 'I could not find a confident answer in your documents.',
-    chunk: null
-  };
-
-  for (const chunk of chunks.slice(0, 5)) {
-    const qaResult = await answerQuestion(question, chunk.content);
-    if (qaResult?.score > bestAnswer.score) {
-      bestAnswer = {
-        score: qaResult.score,
-        text: qaResult.answer,
-        chunk
-      };
-    }
-  }
-
   const sources = chunks.map(chunk => ({
     filename: chunk.filename || 'Unknown document',
     documentId: chunk.document_id,
@@ -100,9 +82,7 @@ async function craftAnswer(question, chunks) {
     preview: chunk.content.slice(0, 200) + (chunk.content.length > 200 ? '…' : '')
   }));
 
-  const responseText = bestAnswer.score > 0.1
-    ? bestAnswer.text
-    : 'I could not find a confident answer in your documents.';
+  const responseText = await generateResponse(question, chunks);
 
   return {
     text: responseText,
