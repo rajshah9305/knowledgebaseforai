@@ -1,0 +1,71 @@
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #667eea;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 2px dashed transparent;
+}
+
+.dropzone:hover:not(.disabled) {
+  background: #5568d3;
+  transform: translateY(-1px);
+}
+
+.dropzone.active {
+  background: #764ba2;
+  border-color: white;
+}
+
+.dropzone.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.upload-progress {
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  animation: slideIn 0.3s ease;
+}
+
+.upload-progress.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.upload-progress.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.upload-progress.uploading {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FIXED: Removed extra closing brace from here.
+*/
